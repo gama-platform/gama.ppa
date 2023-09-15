@@ -17,9 +17,6 @@ on:
 
 env:
   REPOSITORY: gama-platform/gama 
-  # GIT_TRACE_PACKET: 1
-  # GIT_TRACE: 1
-  # GIT_CURL_VERBOSE: 1
 
 jobs:
   deploy:
@@ -35,6 +32,7 @@ jobs:
 
       - name: Download deb file from ${{ env.REPOSITORY }}
         uses: robinraju/release-downloader@v1.8
+        id: download
         with:
           repository: ${{ env.REPOSITORY }}
           tag: ${{ inputs.tag }}
@@ -42,14 +40,32 @@ jobs:
           tarBall: false
           zipBall: false
 
-      - name: Creating the `Packages`, `Packages.gz` `Release`, `Release.gpg` and `InRelease` files
+      - name: Creating the `Packages`, `Packages.gz` and `Release` files
         run: |
           dpkg-scanpackages --multiversion . > Packages
           gzip -k -f Packages
           apt-ftparchive release . > Release
 
-          git config --global pack.window 1
-          git config http.postBuffer 524288000
+      - name: Setup redirections to https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }}
+        shell: python
+        run: |
+          import os
+          from string import Template
+          
+          files = ${{ steps.download.outputs.downloaded_files }}
+          mappings = []
+          
+          for file in files:
+              mappings.append(
+                  { "repo": "${{env.REPOSITORY}}", "tag": "${{inputs.tag}}", "file": file }
+              )
+          
+          template = Template(open("templates/package_template").read())
+
+          for m in mappings:
+              content = template.substitute(**m)
+              f = open(f"{m['file']}", "w")
+              f.write(content)
 
       - name: Commit new files
         # Never intended to work as Gama debs are over Github's 100MB limit
