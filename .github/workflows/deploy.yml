@@ -1,0 +1,65 @@
+name: Update repository
+run-name: Deploy packages to GH pages
+
+on:
+  workflow_dispatch: 
+    inputs:
+      tag:
+        description: "Release tag name"
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      tag:
+        description: "Release tag name"
+        required: true
+        type: string
+
+env:
+  REPOSITORY: gama-platform/gama 
+  # GIT_TRACE_PACKET: 1
+  # GIT_TRACE: 1
+  # GIT_CURL_VERBOSE: 1
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gnupg
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download deb file from ${{ env.REPOSITORY }}
+        uses: robinraju/release-downloader@v1.8
+        with:
+          repository: ${{ env.REPOSITORY }}
+          tag: ${{ inputs.tag }}
+          fileName: "*.deb"
+          tarBall: false
+          zipBall: false
+
+      - name: Creating the `Packages`, `Packages.gz` `Release`, `Release.gpg` and `InRelease` files
+        run: |
+          dpkg-scanpackages --multiversion . > Packages
+          gzip -k -f Packages
+          apt-ftparchive release . > Release
+
+          git config --global pack.window 1
+          git config http.postBuffer 524288000
+
+      - name: Commit new files
+        # Never intended to work as Gama debs are over Github's 100MB limit
+        # But it does a good base
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "."
+          author_email: ${{ secrets.BOT_GH_EMAIL }}
+          author_name: ${{ secrets.BOT_GH_NAME }}
+          committer_name: ${{ secrets.BOT_GH_NAME }}
+          committer_email: ${{ secrets.BOT_GH_EMAIL }}
+          github_token: ${{ github.token }}
+          message: "Update repository with gama ${{ inputs.tag }}"
