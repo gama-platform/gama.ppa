@@ -43,8 +43,18 @@ jobs:
       - name: Creating the `Packages`, `Packages.gz` and `Release` files
         run: |
           dpkg-scanpackages --multiversion . > Packages
+
+          echo '${{ steps.download.outputs.downloaded_files }}' | jq -r '.[]' | while read -r f; do 
+            echo file: $f
+            echo run: sed -i "s|Filename: ./$(basename $f)|Filename: ./$(basename $f).html|g" Packages
+            sed -i "s|Filename: ./$(basename $f)|Filename: ./$(basename $f).html|g" Packages
+          done
+
+
           gzip -k -f Packages
           apt-ftparchive release . > Release
+
+          rm *.deb
 
       - name: Setup redirections to https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }}
         shell: python
@@ -56,15 +66,19 @@ jobs:
           mappings = []
           
           for file in files:
+              redirect_target = file.split("/")[-1]
+
+              print(redirect_target)
+
               mappings.append(
-                  { "repo": "${{env.REPOSITORY}}", "tag": "${{inputs.tag}}", "file": file }
+                  { "repo": "${{env.REPOSITORY}}", "tag": "${{inputs.tag}}", "file": redirect_target }
               )
           
           template = Template(open("templates/package_template").read())
 
           for m in mappings:
               content = template.substitute(**m)
-              f = open(f"{m['file']}", "w")
+              f = open(f"{m['file']}.html", "w")
               f.write(content)
 
       - name: Commit new files
