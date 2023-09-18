@@ -1,0 +1,6 @@
+/*
+  Access-Control-Allow-Origin: *
+
+/:file.deb.html
+  Content-Disposition: attachment; filename=":file.deb"
+  Location: https://github.com/${repo}/releases/download/${tag}/:file.deb

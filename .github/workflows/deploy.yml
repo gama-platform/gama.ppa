@@ -1,5 +1,5 @@
 name: Update repository
-run-name: Deploy packages to GH pages
+run-name: Deploy packages to CloudFlare pages
 
 on:
   workflow_dispatch: 
@@ -42,6 +42,7 @@ jobs:
 
       - name: Creating the `Packages`, `Packages.gz` and `Release` files
         run: |
+
           dpkg-scanpackages --multiversion . > Packages
 
           echo '${{ steps.download.outputs.downloaded_files }}' | jq -r '.[]' | while read -r f; do 
@@ -74,16 +75,19 @@ jobs:
                   { "repo": "${{env.REPOSITORY}}", "tag": "${{inputs.tag}}", "file": redirect_target }
               )
           
-          template = Template(open("templates/package_template").read())
+          template_deb_file = Template(open("templates/package_template").read())
+          template_headers  = Template(open("templates/_headers_template").read())
 
           for m in mappings:
-              content = template.substitute(**m)
+              content = template_deb_file.substitute(**m)
               f = open(f"{m['file']}.html", "w")
               f.write(content)
 
+          headers = template_headers.substitute(**mappings[0])
+          f = open("__site/_headers", "w")
+          f.write(headers)
+
       - name: Commit new files
-        # Never intended to work as Gama debs are over Github's 100MB limit
-        # But it does a good base
         uses: EndBug/add-and-commit@v9
         with:
           add: "."
@@ -93,3 +97,4 @@ jobs:
           committer_email: ${{ secrets.BOT_GH_EMAIL }}
           github_token: ${{ github.token }}
           message: "Update repository with gama ${{ inputs.tag }}"
+          push: true
