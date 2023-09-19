@@ -1,0 +1,131 @@
+name: Update repository
+run-name: Deploy packages to CloudFlare pages
+
+on:
+  workflow_dispatch: 
+    inputs:
+      tag:
+        description: "Release tag name"
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      tag:
+        description: "Release tag name"
+        required: true
+        type: string
+
+env:
+  REPOSITORY: gama-platform/gama 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gnupg
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download deb file from ${{ env.REPOSITORY }}
+        uses: robinraju/release-downloader@v1.8
+        id: download
+        with:
+          repository: ${{ env.REPOSITORY }}
+          tag: ${{ inputs.tag }}
+          fileName: "*.deb"
+          tarBall: false
+          zipBall: false
+
+      - name: Creating the `Packages`, `Packages.gz` and `Release` files
+        run: |
+
+          dpkg-scanpackages --multiversion . > Packages
+
+          echo '${{ steps.download.outputs.downloaded_files }}' | jq -r '.[]' | while read -r f; do 
+            echo file: $f
+            echo run: sed -i "s|Filename: ./$(basename $f)|Filename: ./$(basename $f).html|g" Packages
+            sed -i "s|Filename: ./$(basename $f)|Filename: ./$(basename $f).html|g" Packages
+          done
+
+
+          gzip -k -f Packages
+          apt-ftparchive release . > Release
+
+          rm *.deb
+
+      - name: Setup redirections to https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }}
+        shell: python
+        run: |
+          import os
+          from string import Template
+          
+          files = ${{ steps.download.outputs.downloaded_files }}
+          mappings = []
+          headers_rules = ""
+
+          for file in files:
+              redirect_target = file.split("/")[-1]
+
+              print(redirect_target)
+
+              mappings.append(
+                  { "repo": "${{env.REPOSITORY}}", "tag": "${{inputs.tag}}", "file": redirect_target }
+              )
+          
+          template_deb_file = Template(open("templates/package_template").read())
+          template_headers  = Template(open("templates/_headers_template").read())
+
+          for m in mappings:
+              content = template_deb_file.substitute(**m)
+              f = open(f"{m['file']}.html", "w")
+              f.write(content)
+              filename = m["file"].split("/")[-1].split(".html")[0]
+
+              headers_rules += f"/{m['file']}.html\n\tContent-Disposition: attachment; filename=\"{filename}.deb\"\n\tLocation: https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }}/{filename}\n\n"
+
+          headers = template_headers.substitute(headers_rules=headers_rules)
+          f = open("__site/_headers", "w")
+          f.write(headers)
+
+      - name: Updating index
+        shell: python
+        run: |
+          import glob
+          from string import Template
+
+          index_mappings = { "tag": "${{inputs.tag}}", "latest_packages": "", "all_packages": "" }
+
+          packages = open("Packages").read().split("\n\n")
+          packages.pop()
+
+          for package in packages:
+              package = package.split("\n")
+              package = { p.split(": ")[0]: p.split(": ")[1] for p in package }
+              index_mappings["latest_packages"] += f"<li><a href=\"{package['Filename']}\">{package['Package']}</a><br>Version: {package['Version']}<br>Description: {package['Description']}</li>\n"
+
+          files = glob.glob("*.deb.html")
+
+          for file in files:
+              index_mappings["all_packages"] += f"<div class=\"file-list-item\"><a href=\"/{file}\">{file[:-5]}</a><br></div>\n"
+          
+          template_index = Template(open("templates/index_template").read())
+          template_index = template_index.substitute(**index_mappings)
+          f = open("index.html", "w")
+          f.write(template_index)
+
+
+      - name: Commit new files
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "."
+          author_email: ${{ secrets.BOT_GH_EMAIL }}
+          author_name: ${{ secrets.BOT_GH_NAME }}
+          committer_name: ${{ secrets.BOT_GH_NAME }}
+          committer_email: ${{ secrets.BOT_GH_EMAIL }}
+          github_token: ${{ github.token }}
+          message: "Update repository with gama ${{ inputs.tag }}"
+          push: true

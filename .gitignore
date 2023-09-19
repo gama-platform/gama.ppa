@@ -1,0 +1,5 @@
+!./__site/.keep
+!./__site/_headers
+_site
+
+.jekyll-cache/
