@@ -87,6 +87,33 @@ jobs:
           f = open("__site/_headers", "w")
           f.write(headers)
 
+      - name: Updating index
+        shell: python
+        run: |
+          import glob
+          from string import Template
+
+          index_mappings = { "tag": "${{inputs.tag}}", "latest_packages": "", "all_packages": "" }
+
+          packages = open("Packages").read().split("\n\n")
+          packages.pop()
+
+          for package in packages:
+              package = package.split("\n")
+              package = { p.split(": ")[0]: p.split(": ")[1] for p in package }
+              index_mappings["latest_packages"] += f"<li><a href=\"${package['Filename']}\">{package['Package']}</a><br>Version: {package['Version']}<br>Description: {package['Description']}</li>\n"
+
+          files = glob.glob("*.deb.html")
+
+          for file in files:
+              index_mappings["all_packages"] += f"<div class=\"file-list-item\"><a href=\"{file}\">{file[:-5]}</a><br></div>\n"
+          
+          template_index = Template(open("templates/index_template").read())
+          template_index = template_index.substitute(**index_mappings)
+          f = open("index.html", "w")
+          f.write(template_index)
+
+
       - name: Commit new files
         uses: EndBug/add-and-commit@v9
         with:
