@@ -18,5 +18,5 @@ It is triggered by either a `workflow_dispatch` or a `workflow_call` event, both
 sudo -i
 apt update
 apt install ca-certificates
-echo "deb [trusted=yes] https://<url to the CF Pages site> ./" | sudo tee -a /etc/apt/sources.list
+echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | sudo tee -a /etc/apt/sources.list
 ``` 
