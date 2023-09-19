@@ -65,7 +65,8 @@ jobs:
           
           files = ${{ steps.download.outputs.downloaded_files }}
           mappings = []
-          
+          headers_rules = ""
+
           for file in files:
               redirect_target = file.split("/")[-1]
 
@@ -82,8 +83,11 @@ jobs:
               content = template_deb_file.substitute(**m)
               f = open(f"{m['file']}.html", "w")
               f.write(content)
+              filename = m["file"].split("/")[-1].split(".html")[0]
 
-          headers = template_headers.substitute(**mappings[0])
+              headers_rules += f"/{m['file']}.html\n\tContent-Disposition: attachment; filename=\"{filename}.deb\"\n\tLocation: https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }}/{filename}\n\n"
+
+          headers = template_headers.substitute(headers_rules=headers_rules)
           f = open("__site/_headers", "w")
           f.write(headers)
 
@@ -101,12 +105,12 @@ jobs:
           for package in packages:
               package = package.split("\n")
               package = { p.split(": ")[0]: p.split(": ")[1] for p in package }
-              index_mappings["latest_packages"] += f"<li><a href=\"${package['Filename']}\">{package['Package']}</a><br>Version: {package['Version']}<br>Description: {package['Description']}</li>\n"
+              index_mappings["latest_packages"] += f"<li><a href=\"{package['Filename']}\">{package['Package']}</a><br>Version: {package['Version']}<br>Description: {package['Description']}</li>\n"
 
           files = glob.glob("*.deb.html")
 
           for file in files:
-              index_mappings["all_packages"] += f"<div class=\"file-list-item\"><a href=\"{file}\">{file[:-5]}</a><br></div>\n"
+              index_mappings["all_packages"] += f"<div class=\"file-list-item\"><a href=\"/{file}\">{file[:-5]}</a><br></div>\n"
           
           template_index = Template(open("templates/index_template").read())
           template_index = template_index.substitute(**index_mappings)
