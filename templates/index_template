@@ -96,10 +96,23 @@
     <h1>Debian Repository</h1>
     <p>Welcome to the Debian repository of the <a href="https://gama-platform.org">Gama platform</a>.<br> 
     Below is a list of the latest packages (version <a href="https://github.com/gama-platform/gama/releases/tag/${tag}">${tag}</a>):</p>
+    <br/>
 
     <ul>
         ${latest_packages}
     </ul>
+
+    <br/>
+    <p>You can install them with the following command</p>
+    
+    <pre><code>sudo apt install &lt;PackageName&gt;</code></pre>
+
+    <p>For instance</p>
+    
+    <pre><code>sudo apt install gama-platform</code></pre>
+
+    <p>If you prefer to download a specific version of the package, go to the All Versions section, click on the version to download and install it this way</p>
+    <pre><code>sudo apt install ./&lt;path to the downloaded package&gt;</code></pre>
 
     <hr>
 
@@ -107,13 +120,11 @@
     <p>Follow these steps to add the repository:</p>
 
     <pre>
-        <button class="copy-button" onclick="copyCode()">Copy</button>
-        <code>
+        <button class="copy-button" onclick="copyCode()">Copy</button><code class="copied-code">
 sudo -i
 apt update
 apt install ca-certificates
-echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | sudo tee -a /etc/apt/sources.list
-        </code>
+echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | tee -a /etc/apt/sources.list</code>
     </pre>
 
     <hr>
@@ -125,7 +136,7 @@ echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | sudo tee -a /etc/apt
 
     <script>
         function copyCode() {
-            const codeElement = document.querySelector('pre code');
+            const codeElement = document.querySelector('.copied-code');
             const textArea = document.createElement('textarea');
             textArea.value = codeElement.textContent;
             document.body.appendChild(textArea);
