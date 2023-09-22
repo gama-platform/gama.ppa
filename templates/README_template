@@ -3,12 +3,17 @@
 This action creates a GitHub Pages site using Jekyll and CloudFlare Pages.
 It is triggered by either a `workflow_dispatch` or a `workflow_call` event, both with the `tag` input referring to the tag attached to the release you wish to publish.
 
-# Latest packages
+## Latest packages 🟢
 
 To see how to install these packages on your system, head over to the [ppa web page](https://ppa.gama-platform.org).
 
 ${latest_packages}
 
+## Pre-release/unstable packages ⚠️
+
+The following packages are unstable and thus not recommended.
+
+${pre_release_packages}
 
 # Setup instructions
 
