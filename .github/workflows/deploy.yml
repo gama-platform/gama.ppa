@@ -90,19 +90,19 @@ jobs:
       - run: echo ${{ steps.pre_release_check.outputs.is_pre_release }}
 
       - name: Setup redirections to https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }}
-        if: ${{ steps.pre_release_check.outputs.is_pre_release }} == 'false'
+        if: steps.pre_release_check.outputs.is_pre_release == 'false'
         run: python scripts/setup_redirections.py ${{ env.REPOSITORY }} ${{ inputs.tag }} '${{ steps.download.outputs.downloaded_files }}'
          
       - name: Setup redirections to https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }} pre-releases
-        if: ${{ steps.pre_release_check.outputs.is_pre_release }} == 'true'
+        if: steps.pre_release_check.outputs.is_pre_release == 'true'
         run: python scripts/setup_redirections.py -p ${{ env.REPOSITORY }} ${{ inputs.tag }} '${{ steps.download.outputs.downloaded_files }}'
 
       - name: Updating index and README
-        if: ${{ steps.pre_release_check.outputs.is_pre_release }} == 'false'
+        if: steps.pre_release_check.outputs.is_pre_release == 'false'
         run: python scripts/setup_index_and_readme.py ${{ inputs.tag }} 
 
       - name: Updating index and README with pre-release
-        if: ${{ steps.pre_release_check.outputs.is_pre_release }} == 'true'
+        if: steps.pre_release_check.outputs.is_pre_release == 'true'
         run: python scripts/setup_index_and_readme.py ${{ inputs.tag }} -p '${{ steps.download.outputs.downloaded_files }}'
 
       - name: Commit new files
