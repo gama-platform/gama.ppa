@@ -11,11 +11,15 @@ ${latest_packages}
 
 ## Pre-release/unstable packages ⚠️
 
-The following packages are unstable and thus not recommended.
+> [!IMPORTANT]
+> The following packages are unstable and thus not recommended.
+
 
 ${pre_release_packages}
 
-# Setup instructions
+- - -
+
+# Instructions to host this PPA
 
 - Go to your CloudFlare dashboard
 - Click on `Workers & Pages`, then `Pages` and `Connect to git`

@@ -53,6 +53,7 @@ for package in packages:
     else:
         index_mappings["latest_packages"]  += html
         readme_mappings["latest_packages"] += markdown
+        index_mappings["tag"] = package["Version"]
     
 
 files = glob.glob("*.deb.html")
