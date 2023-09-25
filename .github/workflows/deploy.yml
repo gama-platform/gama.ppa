@@ -67,15 +67,17 @@ jobs:
 
           else
             echo '${{ steps.download.outputs.downloaded_files }}' | jq -r '.[]' | while read -r f; do 
-              f=$(basename $f)
-              dpkg-scanpackages --multiversion $f > Packages_${f}
+              filename=$(basename $f)
+              dpkg-scanpackages --multiversion $filename > Packages_${filename}
 
-              echo file: $f - Packages_${f}
-              echo run: sed -i "s|Filename: ./$(basename $f)|Filename: ./$(basename $f).html|g" Packages_${f}
-                        sed -i "s|Filename: ./$(basename $f)|Filename: ./$(basename $f).html|g" Packages_${f}
+              echo file: $filename - Packages_${filename}
+              echo run: sed -i "s|Filename: $f|Filename: ./$filename.html|g" Packages_${filename}
+                        sed -i "s|Filename: $f|Filename: ./$filename.html|g" Packages_${filename}
               
-              echo run: sed -i "s/Package: \(.*\)/Package: \1-unstable/g" Packages_${f}
-                        sed -i "s/Package: \(.*\)/Package: \1-unstable/g" Packages_${f}
+              echo run: sed -i "s|Package: \(.*\)|Package: \1-unstable|g" Packages_${filename}
+                        sed -i "s|Package: \(.*\)|Package: \1-unstable|g" Packages_${filename}
+
+              cat Packages_${filename}
             done
 
             cat Packages_* >> Packages
