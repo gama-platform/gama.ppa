@@ -44,6 +44,10 @@ jobs:
             echo "is_pre_release=false" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Clear unstable packages
+        run: |
+          python scripts/clear_unstable_packages.py
+
       - name: Download deb file from ${{ env.REPOSITORY }}
         uses: robinraju/release-downloader@v1.8
         id: download

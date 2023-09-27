@@ -35,6 +35,14 @@ if pre_release :
 index_mappings = { "tag": args[0], "latest_packages": "", "all_packages": "", "unstable_packages": "" }
 readme_mappings = { "latest_packages": "", "pre_release_packages": "" }
 
+if pre_release:
+    readme_mappings["pre_release_packages"] = """
+## Pre-release/unstable packages ⚠️
+
+> [!IMPORTANT]
+> The following packages are unstable and thus not recommended.
+"""
+
 packages = open("Packages").read().split("\n\n")
 packages.pop()
 

@@ -9,10 +9,7 @@ To see how to install these packages on your system, head over to the [ppa web p
 
 ${latest_packages}
 
-## Pre-release/unstable packages ⚠️
 
-> [!IMPORTANT]
-> The following packages are unstable and thus not recommended.
 
 
 ${pre_release_packages}
