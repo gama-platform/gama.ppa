@@ -30,6 +30,24 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Check if ${{ inputs.tag }} is a pre-release
+        id: pre_release_check
+        run: | 
+          body="$(curl https://api.github.com/repos/${{ env.REPOSITORY }}/releases)"
+          pre="$(jq -r 'map(select(.prerelease)) | first | .tag_name' <<< "$body")"
+
+          echo "pre: $pre"
+
+          if [[ "${{ inputs.tag }}" == "$pre" ]]; then 
+            echo "is_pre_release=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_pre_release=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Clear alpha packages
+        run: |
+          python scripts/clear_alpha_packages.py
+
       - name: Download deb file from ${{ env.REPOSITORY }}
         uses: robinraju/release-downloader@v1.8
         id: download
@@ -42,15 +60,33 @@ jobs:
 
       - name: Creating the `Packages`, `Packages.gz` and `Release` files
         run: |
+          if [[ "${{ steps.pre_release_check.outputs.is_pre_release }}" == "false" ]]; then 
+            dpkg-scanpackages --multiversion . > Packages
+          
+            echo '${{ steps.download.outputs.downloaded_files }}' | jq -r '.[]' | while read -r f; do 
+              echo file: $f
+              echo run: sed -i "s|Filename: ./$(basename $f)|Filename: ./$(basename $f).html|g" Packages
+              sed -i "s|Filename: ./$(basename $f)|Filename: ./$(basename $f).html|g" Packages
+            done
 
-          dpkg-scanpackages --multiversion . > Packages
+          else
+            echo '${{ steps.download.outputs.downloaded_files }}' | jq -r '.[]' | while read -r f; do 
+              filename=$(basename $f)
+              dpkg-scanpackages --multiversion $filename > Packages_${filename}
 
-          echo '${{ steps.download.outputs.downloaded_files }}' | jq -r '.[]' | while read -r f; do 
-            echo file: $f
-            echo run: sed -i "s|Filename: ./$(basename $f)|Filename: ./$(basename $f).html|g" Packages
-            sed -i "s|Filename: ./$(basename $f)|Filename: ./$(basename $f).html|g" Packages
-          done
+              echo file: $filename - Packages_${filename}
+              echo run: sed -i "s|Filename: $f|Filename: ./$filename.html|g" Packages_${filename}
+                        sed -i "s|Filename: $f|Filename: ./$filename.html|g" Packages_${filename}
+              
+              echo run: sed -i "s|Package: \(.*\)|Package: \1-alpha|g" Packages_${filename}
+                        sed -i "s|Package: \(.*\)|Package: \1-alpha|g" Packages_${filename}
 
+              cat Packages_${filename}
+            done
+
+            cat Packages_* >> Packages
+            rm Packages_*
+          fi
 
           gzip -k -f Packages
           apt-ftparchive release . > Release
@@ -58,76 +94,20 @@ jobs:
           rm *.deb
 
       - name: Setup redirections to https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }}
-        shell: python
-        run: |
-          import os
-          from string import Template
-          
-          files = ${{ steps.download.outputs.downloaded_files }}
-          mappings = []
-          headers_rules = ""
-
-          for file in files:
-              redirect_target = file.split("/")[-1]
-
-              print(redirect_target)
-
-              mappings.append(
-                  { "repo": "${{env.REPOSITORY}}", "tag": "${{inputs.tag}}", "file": redirect_target }
-              )
-          
-          template_deb_file = Template(open("templates/package_template").read())
-          template_headers  = Template(open("templates/_headers_template").read())
-
-          for m in mappings:
-              content = template_deb_file.substitute(**m)
-              f = open(f"{m['file']}.html", "w")
-              f.write(content)
-              filename = m["file"].split("/")[-1].split(".html")[0]
-
-              headers_rules += f"/{m['file']}.html\n\tContent-Disposition: attachment; filename=\"{filename}.deb\"\n\tLocation: https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }}/{filename}\n\n"
-
-          headers = template_headers.substitute(headers_rules=headers_rules)
-          f = open("__site/_headers", "w")
-          f.write(headers)
+        if: steps.pre_release_check.outputs.is_pre_release == 'false'
+        run: python scripts/setup_redirections.py ${{ env.REPOSITORY }} ${{ inputs.tag }} '${{ steps.download.outputs.downloaded_files }}'
+         
+      - name: Setup redirections to https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }} pre-releases
+        if: steps.pre_release_check.outputs.is_pre_release == 'true'
+        run: python scripts/setup_redirections.py -p ${{ env.REPOSITORY }} ${{ inputs.tag }} '${{ steps.download.outputs.downloaded_files }}'
 
       - name: Updating index and README
-        shell: python
-        run: |
-          import glob
-          from string import Template
+        if: steps.pre_release_check.outputs.is_pre_release == 'false'
+        run: python scripts/setup_index_and_readme.py ${{ inputs.tag }} 
 
-          index_mappings = { "tag": "${{inputs.tag}}", "latest_packages": "", "all_packages": "" }
-
-          readme_list = ""
-
-          packages = open("Packages").read().split("\n\n")
-          packages.pop()
-
-          for package in packages:
-              package = package.split("\n")
-              package = { p.split(": ")[0]: p.split(": ")[1] for p in package }
-
-              print(package)
-
-              index_mappings["latest_packages"] += f"<li><a href=\"{package['Filename']}\">{package['Package']}</a><br>Version: {package['Version']}<br>Description: {package['Description']}<br>Filename: <a href=\"{package['Filename']}\">{package['Filename'][2:-5]}</a></li>\n"
-              readme_list += f"- {package['Package']} - [{package['Filename'][2:-5]}](https://ppa.gama-platform.org/{package['Filename'][2:]})\n"
-
-          files = glob.glob("*.deb.html")
-
-          for file in files:
-              index_mappings["all_packages"] += f"<div class=\"file-list-item\"><a href=\"/{file}\">{file[:-5]}</a><br></div>\n"
-          
-          template_index = Template(open("templates/index_template").read())
-          template_index = template_index.substitute(**index_mappings)
-          f = open("index.html", "w")
-          f.write(template_index)
-
-
-          template_readme   = Template(open("templates/README_template").read())
-          template_readme   = template_readme.substitute(latest_packages=readme_list)
-          f = open("README.md", "w")
-          f.write(template_readme)
+      - name: Updating index and README with pre-release
+        if: steps.pre_release_check.outputs.is_pre_release == 'true'
+        run: python scripts/setup_index_and_readme.py ${{ inputs.tag }} -p '${{ steps.download.outputs.downloaded_files }}'
 
       - name: Commit new files
         uses: EndBug/add-and-commit@v9
