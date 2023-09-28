@@ -44,9 +44,9 @@ jobs:
             echo "is_pre_release=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Clear unstable packages
+      - name: Clear alpha packages
         run: |
-          python scripts/clear_unstable_packages.py
+          python scripts/clear_alpha_packages.py
 
       - name: Download deb file from ${{ env.REPOSITORY }}
         uses: robinraju/release-downloader@v1.8
@@ -78,8 +78,8 @@ jobs:
               echo run: sed -i "s|Filename: $f|Filename: ./$filename.html|g" Packages_${filename}
                         sed -i "s|Filename: $f|Filename: ./$filename.html|g" Packages_${filename}
               
-              echo run: sed -i "s|Package: \(.*\)|Package: \1-unstable|g" Packages_${filename}
-                        sed -i "s|Package: \(.*\)|Package: \1-unstable|g" Packages_${filename}
+              echo run: sed -i "s|Package: \(.*\)|Package: \1-alpha|g" Packages_${filename}
+                        sed -i "s|Package: \(.*\)|Package: \1-alpha|g" Packages_${filename}
 
               cat Packages_${filename}
             done

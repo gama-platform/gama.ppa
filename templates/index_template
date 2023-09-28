@@ -129,12 +129,12 @@ echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | tee -a /etc/apt/sour
 
     <hr>
 
-    <h2>Unstable packages</h2>
+    <h2>alpha packages</h2>
 
     <p>The following apt packages can be installed the same way as the usual ones, however these are unstable and thus not recommended</p>
 
     <ul>
-        ${unstable_packages}
+        ${alpha_packages}
     </ul>
 
     <hr>

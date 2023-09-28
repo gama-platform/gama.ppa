@@ -32,15 +32,15 @@ if pre_release :
     pre_release_files = json.loads(pre_release_files_json) 
 
 
-index_mappings = { "tag": args[0], "latest_packages": "", "all_packages": "", "unstable_packages": "" }
+index_mappings = { "tag": args[0], "latest_packages": "", "all_packages": "", "alpha_packages": "" }
 readme_mappings = { "latest_packages": "", "pre_release_packages": "" }
 
 if pre_release:
     readme_mappings["pre_release_packages"] = """
-## Pre-release/unstable packages ⚠️
+## Pre-release/alpha packages ⚠️
 
 > [!IMPORTANT]
-> The following packages are unstable and thus not recommended.
+> The following packages are alpha and thus not recommended.
 """
 
 packages = open("Packages").read().split("\n\n")
@@ -55,8 +55,8 @@ for package in packages:
     html     = f"<li><a href=\"{package['Filename']}\">{package['Package']}</a><br>Version: {package['Version']}<br>Description: {package['Description']}<br>Filename: <a href=\"{package['Filename']}\">{package['Filename'][2:-5]}</a></li>\n"
     markdown = f"- {package['Package']} - [{package['Filename'][2:-5]}](https://ppa.gama-platform.org/{package['Filename'][2:]})\n"
 
-    if pre_release and ( package["Filename"] in pre_release_files or package["Package"].endswith("unstable")):
-        index_mappings["unstable_packages"]     += html
+    if pre_release and ( package["Filename"] in pre_release_files or package["Package"].endswith("alpha")):
+        index_mappings["alpha_packages"]        += html
         readme_mappings["pre_release_packages"] += markdown
     else:
         index_mappings["latest_packages"]  += html
