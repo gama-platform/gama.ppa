@@ -19,8 +19,8 @@ To see how to install these packages on your system, head over to the [ppa web p
 
 > [!IMPORTANT]
 > The following packages are alpha and thus not recommended.
-- gama-platform-alpha - [GAMA_1.9.3_Linux_18.10.23_68338e3.deb](https://ppa.gama-platform.org/GAMA_1.9.3_Linux_18.10.23_68338e3.deb.html)
-- gama-platform-jdk-alpha - [GAMA_1.9.3_Linux_with_JDK_18.10.23_68338e3.deb](https://ppa.gama-platform.org/GAMA_1.9.3_Linux_with_JDK_18.10.23_68338e3.deb.html)
+- gama-platform-alpha - [GAMA_1.9.3_Linux_25.10.23_ca4a0ca.deb](https://ppa.gama-platform.org/GAMA_1.9.3_Linux_25.10.23_ca4a0ca.deb.html)
+- gama-platform-jdk-alpha - [GAMA_1.9.3_Linux_with_JDK_25.10.23_ca4a0ca.deb](https://ppa.gama-platform.org/GAMA_1.9.3_Linux_with_JDK_25.10.23_ca4a0ca.deb.html)
 
 
 - - -
