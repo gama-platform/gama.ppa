@@ -57,3 +57,11 @@
 	Content-Disposition: attachment; filename="GAMA_1.9.3_Linux_with_JDK_27.11.23_05cf1df.deb.deb"
 	Location: https://github.com/gama-platform/gama/releases/download/1.9.3/GAMA_1.9.3_Linux_with_JDK_27.11.23_05cf1df.deb
 
+/GAMA_1.9.3_Linux_05.12.23_a66db09.deb.html
+	Content-Disposition: attachment; filename="GAMA_1.9.3_Linux_05.12.23_a66db09.deb.deb"
+	Location: https://github.com/gama-platform/gama/releases/download/1.9.3/GAMA_1.9.3_Linux_05.12.23_a66db09.deb
+
+/GAMA_1.9.3_Linux_with_JDK_05.12.23_a66db09.deb.html
+	Content-Disposition: attachment; filename="GAMA_1.9.3_Linux_with_JDK_05.12.23_a66db09.deb.deb"
+	Location: https://github.com/gama-platform/gama/releases/download/1.9.3/GAMA_1.9.3_Linux_with_JDK_05.12.23_a66db09.deb
+
