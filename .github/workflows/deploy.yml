@@ -1,5 +1,5 @@
 name: Update repository
-run-name: Deploy packages to CloudFlare pages
+run-name: Plublish ${{ inputs.tag }} to repository
 
 on:
   workflow_dispatch: 
@@ -16,7 +16,7 @@ on:
         type: string
 
 env:
-  REPOSITORY: gama-platform/gama 
+  REPOSITORY: ${{ github.repository }} 
 
 jobs:
   deploy:
@@ -26,6 +26,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y gnupg
+
+          pip install Jinja2
 
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -48,11 +50,11 @@ jobs:
         run: |
           python scripts/clear_alpha_packages.py
 
-      - name: Download deb file from ${{ env.REPOSITORY }}
+      - name: Download deb file from gama-platform/gama
         uses: robinraju/release-downloader@v1.8
         id: download
         with:
-          repository: ${{ env.REPOSITORY }}
+          repository: gama-platform/gama
           tag: ${{ inputs.tag }}
           fileName: "*.deb"
           tarBall: false
@@ -91,15 +93,13 @@ jobs:
           gzip -k -f Packages
           apt-ftparchive release . > Release
 
-          rm *.deb
-
       - name: Setup redirections to https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }}
         if: steps.pre_release_check.outputs.is_pre_release == 'false'
-        run: python scripts/setup_redirections.py ${{ env.REPOSITORY }} ${{ inputs.tag }} '${{ steps.download.outputs.downloaded_files }}'
+        run: python scripts/setup_redirections.py ${{ env.REPOSITORY }} ${{ inputs.tag }}
          
       - name: Setup redirections to https://github.com/${{ env.REPOSITORY }}/releases/download/${{ inputs.tag }} pre-releases
         if: steps.pre_release_check.outputs.is_pre_release == 'true'
-        run: python scripts/setup_redirections.py -p ${{ env.REPOSITORY }} ${{ inputs.tag }} '${{ steps.download.outputs.downloaded_files }}'
+        run: python scripts/setup_redirections.py -p ${{ env.REPOSITORY }} ${{ inputs.tag }}
 
       - name: Updating index and README
         if: steps.pre_release_check.outputs.is_pre_release == 'false'
@@ -109,6 +109,9 @@ jobs:
         if: steps.pre_release_check.outputs.is_pre_release == 'true'
         run: python scripts/setup_index_and_readme.py ${{ inputs.tag }} -p '${{ steps.download.outputs.downloaded_files }}'
 
+      - name: remove downloaded deb files
+        run: rm *.deb
+      
       - name: Commit new files
         uses: EndBug/add-and-commit@v9
         with:
