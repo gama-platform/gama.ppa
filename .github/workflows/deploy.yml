@@ -44,7 +44,7 @@ jobs:
             echo "is_pre_release=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Clear alpha packages
+      - name: Clear alpha packages from `Packages` file and repository
         run: |
           python scripts/clear_alpha_packages.py
 
