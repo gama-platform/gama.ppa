@@ -29,12 +29,6 @@ files = glob.glob("*.deb")
 repo = args[0]
 tag = args[1]
 
-for deb in files:
-    with open("templates/package_template", "r") as f:
-        template_deb_file = Template(f.read())
-        with open(f"{deb}.html", "w") as fw:
-            fw.write(template_deb_file.render(repo=repo, tag=tag, file=deb))
-
 with open("templates/_headers_template", "r") as f:
     template_header = Template(f.read())
 
@@ -55,3 +49,9 @@ with open("templates/_headers_template", "r") as f:
             repo=repo,
             tag=tag
         ))
+
+for deb in files:
+    with open("templates/package_template", "r") as f:
+        template_deb_file = Template(f.read())
+        with open(f"{deb}.html", "w") as fw:
+            fw.write(template_deb_file.render(repo=repo, tag=tag, file=deb))

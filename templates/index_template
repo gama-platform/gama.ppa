@@ -94,17 +94,19 @@
 </head>
 <body>
     <h1>Debian Repository</h1>
-    <p>Welcome to the Debian repository of the <a href="https://gama-platform.org">Gama platform</a>.<br> 
-    Below is a list of the latest packages (version <a href="https://github.com/gama-platform/gama/releases/tag/${tag}">${tag}</a>):</p>
+    <p>Welcome to thttps://www.youtube.com/watch?v=y0RTfxgSHfghe Debian repository of the <a href="https://gama-platform.org">Gama platform</a>.<br> 
+    Below is a list of the latest debian/ubuntu packages available for download.</p>
     <br/>
 
     <ul>
         {% for p in latest_packages %}
+        <li>
             <a href="{{ p.file }}">{{ p.name }}</a>
             <br>Architecture: {{ p.architecture }}
             <br>Version: {{ p.version }}
             <br>Description: {{ p.description }}
             <br>Filename: <a href="{{ p.file }}">{{ p.debfile }}</a>
+        </li>
         {% endfor %}
     </ul>
 
@@ -142,11 +144,13 @@ echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | tee -a /etc/apt/sour
 
     <ul>
         {% for p in latest_packages %}
+        <li>
             <a href="{{ p.file }}">{{ p.name }}</a>
             <br>Architecture: {{ p.architecture }}
             <br>Version: {{ p.version }}
             <br>Description: {{ p.description }}
             <br>Filename: <a href="{{ p.file }}">{{ p.debfile }}</a>
+        </li>
         {% endfor %}
     </ul>
 
@@ -155,8 +159,8 @@ echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | tee -a /etc/apt/sour
 
     <h2>All Versions</h2>
     <div class="file-list">
-    {% for p in all_packages%}
-        <a href="{{ p.file }}">{{ p.debfile }}</a><br>
+    {% for p in all_packages%}$
+    <div class="file-list-item"><a href="{{ p.file }}">{{ p.debfile }}</a><br></div>
     {% endfor %}
     </div>
 
