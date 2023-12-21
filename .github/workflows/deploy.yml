@@ -16,7 +16,7 @@ on:
         type: string
 
 env:
-  REPOSITORY: ${{ github.repository }} 
+  REPOSITORY: gama-platform/gama
 
 jobs:
   deploy:

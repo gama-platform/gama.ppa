@@ -35,22 +35,22 @@ for deb in files:
         with open(f"{deb}.html", "w") as fw:
             fw.write(template_deb_file.render(repo=repo, tag=tag, file=deb))
 
-with open("templates/_header_template", "r") as f:
+with open("templates/_headers_template", "r") as f:
     template_header = Template(f.read())
 
     alpha_packages = []
-    latest_package = []
+    latest_packages = []
 
     if pre_release:
-        latest_package = [ d[:-5] for d in glob.glob("*.deb.html") ]
+        latest_packages = [ d[:-5] for d in glob.glob("*.deb.html") ]
         alpha_packages = glob.glob("*.deb")
     else:
-        latest_package = glob.glob("*.deb")
+        latest_packages = glob.glob("*.deb")
     
 
     with open("__site/_headers", "w") as fw:
         fw.write(template_header.render(
-            latest_package=latest_package, 
+            latest_packages=latest_packages, 
             alpha_packages=alpha_packages,
             repo=repo,
             tag=tag

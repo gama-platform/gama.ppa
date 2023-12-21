@@ -99,7 +99,13 @@
     <br/>
 
     <ul>
-        ${latest_packages}
+        {% for p in latest_packages %}
+            <a href="{{ p.file }}">{{ p.name }}</a>
+            <br>Architecture: {{ p.architecture }}
+            <br>Version: {{ p.version }}
+            <br>Description: {{ p.description }}
+            <br>Filename: <a href="{{ p.file }}">{{ p.debfile }}</a>
+        {% endfor %}
     </ul>
 
     <br/>
@@ -129,19 +135,29 @@ echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | tee -a /etc/apt/sour
 
     <hr>
 
+    {% if pre_release %}
     <h2>alpha packages</h2>
 
     <p>The following apt packages can be installed the same way as the usual ones, however these are unstable and thus not recommended</p>
 
     <ul>
-        ${alpha_packages}
+        {% for p in latest_packages %}
+            <a href="{{ p.file }}">{{ p.name }}</a>
+            <br>Architecture: {{ p.architecture }}
+            <br>Version: {{ p.version }}
+            <br>Description: {{ p.description }}
+            <br>Filename: <a href="{{ p.file }}">{{ p.debfile }}</a>
+        {% endfor %}
     </ul>
 
     <hr>
+    {% endif %}
 
     <h2>All Versions</h2>
     <div class="file-list">
-        ${all_packages}
+    {% for p in all_packages%}
+        <a href="{{ p.file }}">{{ p.debfile }}</a><br>
+    {% endfor %}
     </div>
 
     <script>
