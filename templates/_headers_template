@@ -1,4 +1,15 @@
 /*
   Access-Control-Allow-Origin: *
 
-${headers_rules}
+{% for p in latest_packages %}
+/{{p}}.html
+  Content-Disposition: attachment; filename="{{p}}"
+  Location: https://github.com/{{repo}}/releases/download/{{tag}}/{{p}}.html
+
+{% endfor %}
+
+{% for a in alpha_packages %}
+/{{a}}.html
+  Content-Disposition: attachment; filename="{{a}}"
+  Location: https://github.com/{{repo}}/releases/download/{{tag}}/{{a}}.html
+{% endfor %}

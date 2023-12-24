@@ -1,14 +1,14 @@
-import json
-from string import Template
+import glob
 import sys
 import os
+
+from jinja2 import Template 
 
 args = sys.argv[1:]
 
 pre_release = False
 p_flag_index = -1
 
-print(args)
 for i, a in enumerate(args):
     if pre_release:
         pass
@@ -20,43 +20,38 @@ if pre_release:
     args.pop(p_flag_index)
 
 
-if (len(args) < 3):
-    print(f"usage: python {sys.argv[0]} [-p|--pre-release] <repository> <tag> <files_expresed_as_a_json_array_of_str>")
-    print( "    -p, --pre-release: use this flag to indicate that the tag is a pre-release, and that the following json array of strings is the related files")
+if (len(args) < 2):
+    print(f"usage: python {sys.argv[0]} [-p|--pre-release] <repository> <tag>")
+    print( "    -p, --pre-release: use this flag to indicate that the tag is a pre-release")
     exit(1)
 
-print(args[-1])
+files = glob.glob("*.deb")
+repo = args[0]
+tag = args[1]
 
-files = json.loads(args[-1])
-mappings = []
-headers_rules = ""
+with open("templates/_headers_template", "r") as f:
+    template_header = Template(f.read())
 
-for file in files:
-    redirect_target = file.split("/")[-1]
+    alpha_packages = []
+    latest_packages = []
 
-    print(redirect_target)
+    if pre_release:
+        latest_packages = [ d[:-5] for d in glob.glob("*.deb.html") ]
+        alpha_packages = glob.glob("*.deb")
+    else:
+        latest_packages = glob.glob("*.deb")
+    
 
-    mappings.append(
-        { "repo": args[0], "tag": args[1], "file": redirect_target }
-    )
+    with open("__site/_headers", "w") as fw:
+        fw.write(template_header.render(
+            latest_packages=latest_packages, 
+            alpha_packages=alpha_packages,
+            repo=repo,
+            tag=tag
+        ))
 
-template_deb_file = Template(open("templates/package_template").read())
-template_headers  = Template(open("templates/_headers_template").read())
-
-for m in mappings:
-    content = template_deb_file.substitute(**m)
-    f = open(f"{m['file']}.html", "w")
-    f.write(content)
-    filename = m["file"].split("/")[-1].split(".html")[0]
-
-    headers_rules += f"/{m['file']}.html\n\tContent-Disposition: attachment; filename=\"{filename}.deb\"\n\tLocation: https://github.com/{ args[0] }/releases/download/{args[1]}/{filename}\n\n"
-
-
-# if it is a prerelease we just append to an existing _headers file
-if not pre_release or not os.path.isfile("__site/_headers"):
-    headers = template_headers.substitute(headers_rules=headers_rules)
-    f = open("__site/_headers", "w")
-    f.write(headers)
-else:
-    f = open("__site/_headers", "a")
-    f.write(headers_rules)
+for deb in files:
+    with open("templates/package_template", "r") as f:
+        template_deb_file = Template(f.read())
+        with open(f"{deb}.html", "w") as fw:
+            fw.write(template_deb_file.render(repo=repo, tag=tag, file=deb))

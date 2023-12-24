@@ -1,22 +1,26 @@
 import os 
+import apt_pkg
 
-packages = open("Packages").read().split("\n\n")
-if not packages[-1].strip():
-    packages.pop()
+# This script is called to purge the alpha packages from: 
+# 1. The Packages file
+# 2. The repository
 
-packages_file_to_write = ""
 
-for package in packages:
-    
-    package_lines = package.split("\n")
+apt_pkg.init()
 
-    print(package_lines)
+packagefile_old_content = []
+packagefile_new_content = []
 
-    package_info = { p.split(": ")[0]: p.split(": ")[1] for p in package_lines}
+with open('Packages', 'r') as f:
+    packages = apt_pkg.TagFile(f)
+    for pkg in packages:
+        packagefile_old_content.append(pkg)
+        if pkg['Package'].endswith('alpha'):
+            os.remove(pkg['Filename']) # 2
+            pass
+        else:
+            packagefile_new_content.append(pkg)
 
-    if package_info['Package'].endswith("alpha"):
-        os.remove(package_info["Filename"])
-    else:
-        packages_file_to_write += package + "\n\n"
-
-open("Packages", "w").write(packages_file_to_write)
+with open('Packages', 'w') as fw:
+    for pkg in packagefile_new_content:
+        fw.write(str(pkg))

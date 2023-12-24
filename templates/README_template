@@ -7,12 +7,21 @@ It is triggered by either a `workflow_dispatch` or a `workflow_call` event, both
 
 To see how to install these packages on your system, head over to the [ppa web page](https://ppa.gama-platform.org).
 
-${latest_packages}
+{% for p in latest_packages %}
+- {{ p.name }} - [{{ p.debfile }}](https://ppa.gama-platform.org/{{ p.file }})
+{% endfor %}
 
 
+{% if pre_release %}
+## Pre-release/alpha packages ⚠️
 
+> [!IMPORTANT]
+> The following packages are unstable and thus not recommended for normal use.
 
-${pre_release_packages}
+{% for p in alpha_packages %}
+- {{ p.name }} - [{{ p.debfile }}](https://ppa.gama-platform.org/{{ p.file }})
+{% endfor %}
+{% endif %}
 
 - - -
 
