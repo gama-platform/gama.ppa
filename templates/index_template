@@ -94,7 +94,7 @@
 </head>
 <body>
     <h1>Debian Repository</h1>
-    <p>Welcome to thttps://www.youtube.com/watch?v=y0RTfxgSHfghe Debian repository of the <a href="https://gama-platform.org">Gama platform</a>.<br> 
+    <p>Welcome to the Debian repository of the <a href="https://gama-platform.org">Gama platform</a>.<br> 
     Below is a list of the latest debian/ubuntu packages available for download.</p>
     <br/>
 
@@ -143,7 +143,7 @@ echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | tee -a /etc/apt/sour
     <p>The following apt packages can be installed the same way as the usual ones, however these are unstable and thus not recommended</p>
 
     <ul>
-        {% for p in latest_packages %}
+        {% for p in alpha_packages %}
         <li>
             <a href="{{ p.file }}">{{ p.name }}</a>
             <br>Architecture: {{ p.architecture }}

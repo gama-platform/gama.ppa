@@ -2,7 +2,11 @@ import glob
 import sys
 import os
 
+import apt_pkg
+
 from jinja2 import Template 
+
+apt_pkg.init()
 
 args = sys.argv[1:]
 
@@ -27,7 +31,17 @@ if (len(args) < 2):
 
 files = glob.glob("*.deb")
 repo = args[0]
-tag = args[1]
+tag = args[1] # for the stable version
+alpha_tag = None 
+
+if pre_release: # if this is a pre-release, then give tag the value of the current stable version
+    alpha_tag = tag
+    with open("Packages", "r") as fp:
+        for p in apt_pkg.TagFile(fp):
+            if not p["Package"].endswith("alpha"): # get the latest stable version
+                tag = p["Version"]
+                break
+
 
 with open("templates/_headers_template", "r") as f:
     template_header = Template(f.read())
@@ -47,7 +61,8 @@ with open("templates/_headers_template", "r") as f:
             latest_packages=latest_packages, 
             alpha_packages=alpha_packages,
             repo=repo,
-            tag=tag
+            tag=tag,
+            alpha_tag=alpha_tag
         ))
 
 for deb in files:
