@@ -2,16 +2,6 @@
   Access-Control-Allow-Origin: *
 
 
-/GAMA_1.9.3_Linux_with_JDK_.deb.html
-  Content-Disposition: attachment; filename="GAMA_1.9.3_Linux_with_JDK_.deb"
-  Location: https://github.com/gama-platform/gama/releases/download/1.9.3/GAMA_1.9.3_Linux_with_JDK_.deb
-
-
-/GAMA_1.9.3_Linux_.deb.html
-  Content-Disposition: attachment; filename="GAMA_1.9.3_Linux_.deb"
-  Location: https://github.com/gama-platform/gama/releases/download/1.9.3/GAMA_1.9.3_Linux_.deb
-
-
 /GAMA_1.9.2_Linux_with_JDK.deb.html
   Content-Disposition: attachment; filename="GAMA_1.9.2_Linux_with_JDK.deb"
   Location: https://github.com/gama-platform/gama/releases/download/1.9.3/GAMA_1.9.2_Linux_with_JDK.deb
@@ -30,8 +20,6 @@
 /GAMA_1.9.2_Linux.deb.html
   Content-Disposition: attachment; filename="GAMA_1.9.2_Linux.deb"
   Location: https://github.com/gama-platform/gama/releases/download/1.9.3/GAMA_1.9.2_Linux.deb
-
-
 
 
 /GAMA_2024.02.0_Linux_24.02.24_.deb.html
