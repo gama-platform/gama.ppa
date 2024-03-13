@@ -21,9 +21,9 @@ To see how to install these packages on your system, head over to the [ppa web p
 > The following packages are unstable and thus not recommended for normal use.
 
 
-- gama-platform-alpha - [GAMA_2024.03.0_Linux_07.03.24_fb5cad4.deb](https://ppa.gama-platform.org/./GAMA_2024.03.0_Linux_07.03.24_fb5cad4.deb.html)
+- gama-platform-alpha - [GAMA_2024.3.10-clean_Linux_13.03.24_3d5dd66.deb](https://ppa.gama-platform.org/./GAMA_2024.3.10-clean_Linux_13.03.24_3d5dd66.deb.html)
 
-- gama-platform-jdk-alpha - [GAMA_2024.03.0_Linux_with_JDK_07.03.24_fb5cad4.deb](https://ppa.gama-platform.org/./GAMA_2024.03.0_Linux_with_JDK_07.03.24_fb5cad4.deb.html)
+- gama-platform-jdk-alpha - [GAMA_2024.3.10-clean_Linux_with_JDK_13.03.24_3d5dd66.deb](https://ppa.gama-platform.org/./GAMA_2024.3.10-clean_Linux_with_JDK_13.03.24_3d5dd66.deb.html)
 
 
 
