@@ -34,11 +34,11 @@ Maintainer: GAMA Team <gama-platform@googlegroups.com>
 Depends: openjdk-17-jdk
 Conflicts: gama-platform-jdk
 Replaces: gama-platform-jdk
-Filename: ./GAMA_2024.06-alpha_Linux_17.05.24_050f9e1.deb.html
-Size: 170646622
-MD5sum: 40068098b9389fd9ef4d401c38476f8f
-SHA1: 8c579385585bba78f7171e7d112083e563d72900
-SHA256: 30ecd5bc44a129cfd4ef69620a66a89678ba684bb3f57b11c808ebf9a5cdeb58
+Filename: ./GAMA_2024.06.0_Linux_22.05.24_42ee29b.deb.html
+Size: 170649058
+MD5sum: e0009eaa2c1c4256ce7ba1614caa3690
+SHA1: 6d8dfe1ae0b27f62117bb269a0ceeee25a00f440
+SHA256: 5cf22bdce157eb91294b688320f3b7d413d9c0fa767b0217e6315f365ef417c6
 Homepage: https://gama-platform.org
 Description: GAMA is a modeling and simulation development environment for building spatially explicit agent-based simulations
 
@@ -48,11 +48,11 @@ Architecture: amd64
 Maintainer: GAMA Team <gama-platform@googlegroups.com>
 Conflicts: gama-platform
 Replaces: gama-platform
-Filename: ./GAMA_2024.06-alpha_Linux_with_JDK_17.05.24_050f9e1.deb.html
-Size: 340630104
-MD5sum: 8bdb27ea9c2400c7ec2c0b656a67d377
-SHA1: db934d90c20f5a43ec4dd959f193268a6fe7d452
-SHA256: 090ac497bb071324d24e2a6d5aca8aa586e15bea96bc750f9bf7109bd78d5f6e
+Filename: ./GAMA_2024.06.0_Linux_with_JDK_22.05.24_42ee29b.deb.html
+Size: 340633540
+MD5sum: 7ef07f6be047e196f2f946ad1e45abea
+SHA1: bd52b36a85fad1fdaab7f3c50012ca98f6c4c9e6
+SHA256: f47c2f5088128655ae0f22c325c0c33494f661953a55c7bd3db2ce041adaaab9
 Homepage: https://gama-platform.org
 Description: GAMA is a modeling and simulation development environment for building spatially explicit agent-based simulations
 
