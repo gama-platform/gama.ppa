@@ -2,9 +2,9 @@
   Access-Control-Allow-Origin: *
 
 
-/GAMA_1.9.3_Linux_with_JDK.deb.html
-  Content-Disposition: attachment; filename="GAMA_1.9.3_Linux_with_JDK.deb"
-  Location: https://github.com/gama-platform/gama/releases/download/0.0.0-SNAPSHOT/GAMA_1.9.3_Linux_with_JDK.deb
+/GAMA_2024.10.0_Linux.deb.html
+  Content-Disposition: attachment; filename="GAMA_2024.10.0_Linux.deb"
+  Location: https://github.com/gama-platform/gama/releases/download/0.0.0-SNAPSHOT/GAMA_2024.10.0_Linux.deb
 
 
 /GAMA_2024.03.0_Linux_with_JDK_13.03.24_bc34c22.deb.html
@@ -12,19 +12,14 @@
   Location: https://github.com/gama-platform/gama/releases/download/0.0.0-SNAPSHOT/GAMA_2024.03.0_Linux_with_JDK_13.03.24_bc34c22.deb
 
 
+/GAMA_1.9.2_Linux.deb.html
+  Content-Disposition: attachment; filename="GAMA_1.9.2_Linux.deb"
+  Location: https://github.com/gama-platform/gama/releases/download/0.0.0-SNAPSHOT/GAMA_1.9.2_Linux.deb
+
+
 /GAMA_2024.03.0_Linux_13.03.24_bc34c22.deb.html
   Content-Disposition: attachment; filename="GAMA_2024.03.0_Linux_13.03.24_bc34c22.deb"
   Location: https://github.com/gama-platform/gama/releases/download/0.0.0-SNAPSHOT/GAMA_2024.03.0_Linux_13.03.24_bc34c22.deb
-
-
-/GAMA_1.9.2_Linux_with_JDK.deb.html
-  Content-Disposition: attachment; filename="GAMA_1.9.2_Linux_with_JDK.deb"
-  Location: https://github.com/gama-platform/gama/releases/download/0.0.0-SNAPSHOT/GAMA_1.9.2_Linux_with_JDK.deb
-
-
-/GAMA_2024.10.0_Linux.deb.html
-  Content-Disposition: attachment; filename="GAMA_2024.10.0_Linux.deb"
-  Location: https://github.com/gama-platform/gama/releases/download/0.0.0-SNAPSHOT/GAMA_2024.10.0_Linux.deb
 
 
 /GAMA_2024.10.0_Linux_with_JDK.deb.html
@@ -32,9 +27,14 @@
   Location: https://github.com/gama-platform/gama/releases/download/0.0.0-SNAPSHOT/GAMA_2024.10.0_Linux_with_JDK.deb
 
 
-/GAMA_1.9.2_Linux.deb.html
-  Content-Disposition: attachment; filename="GAMA_1.9.2_Linux.deb"
-  Location: https://github.com/gama-platform/gama/releases/download/0.0.0-SNAPSHOT/GAMA_1.9.2_Linux.deb
+/GAMA_1.9.2_Linux_with_JDK.deb.html
+  Content-Disposition: attachment; filename="GAMA_1.9.2_Linux_with_JDK.deb"
+  Location: https://github.com/gama-platform/gama/releases/download/0.0.0-SNAPSHOT/GAMA_1.9.2_Linux_with_JDK.deb
+
+
+/GAMA_1.9.3_Linux_with_JDK.deb.html
+  Content-Disposition: attachment; filename="GAMA_1.9.3_Linux_with_JDK.deb"
+  Location: https://github.com/gama-platform/gama/releases/download/0.0.0-SNAPSHOT/GAMA_1.9.3_Linux_with_JDK.deb
 
 
 /GAMA_1.9.3_Linux.deb.html
@@ -44,12 +44,12 @@
 
 
 
-/GAMA_2025.05.8_Linux_with_JDK_03.06.25_d8e1796.deb.html
-  Content-Disposition: attachment; filename="GAMA_2025.05.8_Linux_with_JDK_03.06.25_d8e1796.deb"
-  Location: https://github.com/gama-platform/gama/releases/download/2025.05.8/GAMA_2025.05.8_Linux_with_JDK_03.06.25_d8e1796.deb
+/GAMA_2025.06.1_Linux_12.06.25_1d02862.deb.html
+  Content-Disposition: attachment; filename="GAMA_2025.06.1_Linux_12.06.25_1d02862.deb"
+  Location: https://github.com/gama-platform/gama/releases/download/2025.06.1/GAMA_2025.06.1_Linux_12.06.25_1d02862.deb
 
 
-/GAMA_2025.05.8_Linux_03.06.25_d8e1796.deb.html
-  Content-Disposition: attachment; filename="GAMA_2025.05.8_Linux_03.06.25_d8e1796.deb"
-  Location: https://github.com/gama-platform/gama/releases/download/2025.05.8/GAMA_2025.05.8_Linux_03.06.25_d8e1796.deb
+/GAMA_2025.06.1_Linux_with_JDK_12.06.25_1d02862.deb.html
+  Content-Disposition: attachment; filename="GAMA_2025.06.1_Linux_with_JDK_12.06.25_1d02862.deb"
+  Location: https://github.com/gama-platform/gama/releases/download/2025.06.1/GAMA_2025.06.1_Linux_with_JDK_12.06.25_1d02862.deb
 
