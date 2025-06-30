@@ -137,10 +137,9 @@
 
     <pre>
         <button class="copy-button" onclick="copyCode()">Copy</button><code class="copied-code">
-sudo -i
-apt update
-apt install ca-certificates
-echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | tee -a /etc/apt/sources.list</code>
+sudo apt-get update
+sudo apt-get install ca-certificates
+echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | sudo tee -a /etc/apt/sources.list</code>
     </pre>
 
     <hr>
