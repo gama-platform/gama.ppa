@@ -30,7 +30,8 @@ To see how to install these packages on your system, head over to the [ppa web p
     - `BOT_GH_NAME` (the name of the bot account)
 - Trigger the action and you are good to go 🎉! To add the repository do the following commands:
 ```bash
-sudo apt-get update
-sudo apt-get install ca-certificates
+sudo -i
+apt update
+apt install ca-certificates
 echo "deb [trusted=yes] https://ppa.gama-platform.org ./" | sudo tee -a /etc/apt/sources.list
 ``` 
