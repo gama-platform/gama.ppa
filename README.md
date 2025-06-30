@@ -8,22 +8,11 @@ It is triggered by either a `workflow_dispatch` or a `workflow_call` event, both
 To see how to install these packages on your system, head over to the [ppa web page](https://ppa.gama-platform.org).
 
 
-- gama-platform - [GAMA_2024.10.0_Linux.deb](https://ppa.gama-platform.org/./GAMA_2024.10.0_Linux.deb.html)
+- gama-platform - [GAMA_2025.06.3_Linux.deb](https://ppa.gama-platform.org/./GAMA_2025.06.3_Linux.deb.html)
 
-- gama-platform-jdk - [GAMA_2024.10.0_Linux_with_JDK.deb](https://ppa.gama-platform.org/./GAMA_2024.10.0_Linux_with_JDK.deb.html)
-
-
+- gama-platform-jdk - [GAMA_2025.06.3_Linux_with_JDK.deb](https://ppa.gama-platform.org/./GAMA_2025.06.3_Linux_with_JDK.deb.html)
 
 
-## Pre-release/alpha packages ⚠️
-
-> [!IMPORTANT]
-> The following packages are unstable and thus not recommended for normal use.
-
-
-- gama-platform-alpha - [GAMA_2025.06.2_Linux_12.06.25_ba726f6.deb](https://ppa.gama-platform.org/./GAMA_2025.06.2_Linux_12.06.25_ba726f6.deb.html)
-
-- gama-platform-jdk-alpha - [GAMA_2025.06.2_Linux_with_JDK_12.06.25_ba726f6.deb](https://ppa.gama-platform.org/./GAMA_2025.06.2_Linux_with_JDK_12.06.25_ba726f6.deb.html)
 
 
 
