@@ -8,9 +8,9 @@ It is triggered by either a `workflow_dispatch` or a `workflow_call` event, both
 To see how to install these packages on your system, head over to the [ppa web page](https://ppa.gama-platform.org).
 
 
-- gama-platform - [GAMA_2025.06.3_Linux.deb](https://ppa.gama-platform.org/./GAMA_2025.06.3_Linux.deb.html)
+- gama-platform - [GAMA_2025.06.4_Linux.deb](https://ppa.gama-platform.org/./GAMA_2025.06.4_Linux.deb.html)
 
-- gama-platform-jdk - [GAMA_2025.06.3_Linux_with_JDK.deb](https://ppa.gama-platform.org/./GAMA_2025.06.3_Linux_with_JDK.deb.html)
+- gama-platform-jdk - [GAMA_2025.06.4_Linux_with_JDK.deb](https://ppa.gama-platform.org/./GAMA_2025.06.4_Linux_with_JDK.deb.html)
 
 
 
