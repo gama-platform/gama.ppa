@@ -15,6 +15,17 @@ To see how to install these packages on your system, head over to the [ppa web p
 
 
 
+## Pre-release/alpha packages ⚠️
+
+> [!IMPORTANT]
+> The following packages are unstable and thus not recommended for normal use.
+
+
+- gama-platform-alpha - [GAMA_2025.08.0_Linux_11.08.25_2b3582a.deb](https://ppa.gama-platform.org/./GAMA_2025.08.0_Linux_11.08.25_2b3582a.deb.html)
+
+- gama-platform-jdk-alpha - [GAMA_2025.08.0_Linux_with_JDK_11.08.25_2b3582a.deb](https://ppa.gama-platform.org/./GAMA_2025.08.0_Linux_with_JDK_11.08.25_2b3582a.deb.html)
+
+
 
 - - -
 
