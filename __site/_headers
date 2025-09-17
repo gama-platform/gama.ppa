@@ -2,11 +2,6 @@
   Access-Control-Allow-Origin: *
 
 
-/GAMA_2025.06.3_Linux.deb.html
-  Content-Disposition: attachment; filename="GAMA_2025.06.3_Linux.deb"
-  Location: https://github.com/gama-platform/gama/releases/download/2025.6.4/GAMA_2025.06.3_Linux.deb
-
-
 /GAMA_2025.06.4_Linux_with_JDK.deb.html
   Content-Disposition: attachment; filename="GAMA_2025.06.4_Linux_with_JDK.deb"
   Location: https://github.com/gama-platform/gama/releases/download/2025.6.4/GAMA_2025.06.4_Linux_with_JDK.deb
@@ -17,6 +12,11 @@
   Location: https://github.com/gama-platform/gama/releases/download/2025.6.4/GAMA_2025.06.3_Linux_with_JDK.deb
 
 
+/GAMA_2025.06.3_Linux.deb.html
+  Content-Disposition: attachment; filename="GAMA_2025.06.3_Linux.deb"
+  Location: https://github.com/gama-platform/gama/releases/download/2025.6.4/GAMA_2025.06.3_Linux.deb
+
+
 /GAMA_2025.06.4_Linux.deb.html
   Content-Disposition: attachment; filename="GAMA_2025.06.4_Linux.deb"
   Location: https://github.com/gama-platform/gama/releases/download/2025.6.4/GAMA_2025.06.4_Linux.deb
@@ -24,12 +24,12 @@
 
 
 
-/GAMA_2025.08.0_Linux_with_JDK_11.08.25_2b3582a.deb.html
-  Content-Disposition: attachment; filename="GAMA_2025.08.0_Linux_with_JDK_11.08.25_2b3582a.deb"
-  Location: https://github.com/gama-platform/gama/releases/download/2025.08.0/GAMA_2025.08.0_Linux_with_JDK_11.08.25_2b3582a.deb
+/GAMA_2025.09.0_Linux_17.09.25_860732f.deb.html
+  Content-Disposition: attachment; filename="GAMA_2025.09.0_Linux_17.09.25_860732f.deb"
+  Location: https://github.com/gama-platform/gama/releases/download/2025.09.0/GAMA_2025.09.0_Linux_17.09.25_860732f.deb
 
 
-/GAMA_2025.08.0_Linux_11.08.25_2b3582a.deb.html
-  Content-Disposition: attachment; filename="GAMA_2025.08.0_Linux_11.08.25_2b3582a.deb"
-  Location: https://github.com/gama-platform/gama/releases/download/2025.08.0/GAMA_2025.08.0_Linux_11.08.25_2b3582a.deb
+/GAMA_2025.09.0_Linux_with_JDK_17.09.25_860732f.deb.html
+  Content-Disposition: attachment; filename="GAMA_2025.09.0_Linux_with_JDK_17.09.25_860732f.deb"
+  Location: https://github.com/gama-platform/gama/releases/download/2025.09.0/GAMA_2025.09.0_Linux_with_JDK_17.09.25_860732f.deb
 
